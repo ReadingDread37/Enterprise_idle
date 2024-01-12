@@ -30,7 +30,7 @@ html {
   }
   
   #buttons {
-    background-color: grey;
+/*     background-color: grey; */
     display: flex;
     padding-right: 4px;
     padding-left: 2px;
@@ -113,7 +113,7 @@ html {
   
   
   #Upgrades {
-    background-color: lightgrey;
+/*     background-color: lightgrey; */
     display: grid;
     margin: 0px;
     padding: 0px;
@@ -186,6 +186,7 @@ html {
     display: flex;
     font-family: Arial, sans-serif;
     background-color: #d4c4f3;
+    height:100%;
   
     
   }
