@@ -106,7 +106,7 @@ html {
     display: flex;
     font-size: 2vh;
     height: 3vh;
-    /* visibility:hidden; */
+    visibility:hidden;
     align-items: center;
     justify-content: center;
   }
