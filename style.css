@@ -130,6 +130,7 @@ html {
     border-color: brown;
     background-color: #ecce22;
     margin-right: 60%;
+    height: 3vh;
   }
   
   #upgrade2 {
@@ -141,6 +142,7 @@ html {
     background-color:  #ecce22;
     margin-right: 60%;
     margin-top: 0px;
+    height: 3vh;
   }
   
   #upgrade3 {
@@ -151,6 +153,7 @@ html {
     background-color:  #ecce22;
     margin-right: 60%;
     margin-top: 0px;
+    height: 3vh;
   }
   
   #tabs{
