@@ -1,1 +1,1 @@
-# Test-Idle-Game
+# Test Idle Game
