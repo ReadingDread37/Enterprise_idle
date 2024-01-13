@@ -12,12 +12,17 @@
   <div id="container">
     <div id="main">
       <div id="info">
+        <div id="info1">
+          <p id="prestigePoints">0 Prestige Points</p>
+        </div>
+        <div id="info2">
         <p id="goldMined">0 Gold Mined</p>
         <p id="goldTime">0 Gold Mined Per Second</p>
         <p id="miners">0.0 Miners</p>
         <p id="minersH">0 Miners Hired Per Second</p>
         <p id="drillBot">0 DrillBots</p>
-        <p id="drillBotM">0 DrillBots Built Per Second
+        <p id="drillBotM">0 DrillBots Built Per Second</p>
+        </div>
       </div>
       <div id="tabs">
         <button onclick="tab('buttons')" class="tab">Go to Mine Gold</button>
@@ -37,11 +42,11 @@
           Gold</button>
       </div>
       <div class="button">
-        <button onclick="buyMiner()" id="goldTimeUpgrade">Buy a Miner(Currently 0) Cost: 50 Gold</button>
+        <button onclick="buyMiner()" id="goldTimeUpgrade">Buy a Miner (Currently 0) Cost: 100 Gold</button>
       </div>
       <div class="button">
         <button onclick="buyHirer()" id="buyHirer">Buy Hiring staff to hire miners for you (Currently 0)
-          Price:500</button>
+          Price:1000</button>
       </div>
       <div class="button">
         <button onclick="buyDrillBot()" id="buyDrillBot">Buy a DrillBot (Currently 0) Cost:2000
@@ -54,18 +59,22 @@
         Gold </button>
       <button onclick="upgrade2()" id="upgrade2">Better Paper Work Filing- Doubles Power of Hirers (Currently Level 0)
         Cost: 1000 </button>
-      <button onclick="upgrade3()" id="upgrade3">Buy An Exoskeleton Suit for you - One Time Purchase
+      <button onclick="upgrade3()" id="upgrade3">Buy An Exoskeleton - multiplies click power by 100
         Cost: 15000 </button>
 
 
     </div>
     <div id="Achievements">
       <p>Achievements</p>
+      <div id="AchieveShow">
       <div class="Achieve">
-        <p id="A1">Reach 10000 Gold</p>
-
-
-
+        <p id="A1">Reach 100000 Gold</p>
+        <p id="A1E">Increases Miner power by 50%</p>
+        </div>
+        <div class="Achieve">
+        <p id="A2">Reach 20 Hirers</p>
+        <p id="A2E">Increases Hirer power by 100%</p>
+      </div>
       </div>
     </div>
     <div id="Prestige">
@@ -82,6 +91,9 @@
       <div class="prestigeC">
 <button onclick="prestigeU2()" id="prestigeU2">Decrease the tickspeed interval time</button>
       </div>
+      <div class="prestigeC">
+        <button onclick="prestigeU3()" id="prestigeU3">Unlock a more effecient way to produce DrillBots with machinery.</button>
+              </div>
     </div>
     <script src="script.js"></script>
 
