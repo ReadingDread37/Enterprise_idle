@@ -2,6 +2,7 @@
 let shownHire = false
 let Plimit = false
 let A1 = false
+let A2 = false
 let interval = 1000
 let gameData = {
   gold: 0.0,
@@ -9,7 +10,7 @@ let gameData = {
   goldPerClickCost: 10,
   goldPerClickPurchased: 1,
   miner: 0.0,
-  minerCost: 50,
+  minerCost: 100,
   upgrade1Cost: 100,
   upgrade1Amount: 0,
   minerpower: 1,
@@ -19,10 +20,11 @@ let gameData = {
   upgrade3Cost: 15000,
   upgrade3Amount: 0,
   hirer: 0,
-  hireCost: 500,
+  hireCost: 1000,
   hirerpurchased: 0,
   hirePower: 1,
   A1: 1,
+  A2: 1,
   drillBot: 0,
   drillBotCost: 2000,
   drillBotpurchased: 0,
@@ -32,10 +34,13 @@ let gameData = {
 
 let prestigeData = {
   prestige: 0,
+  prestigelimit: 100000,
   prestigeU1Cost: 1,
   prestigeU1Amount: 0,
   prestigeU2Cost:1,
   prestigeU2Amount:0,
+  prestigeU3Cost:1,
+  prestigeU3Amount:0,
 }
 
 function format(number, type) {
@@ -72,7 +77,7 @@ function buyMiner() {
     gameData.gold -= gameData.minerCost
     gameData.miner += 1
     gameData.minerspurchased += 1
-    gameData.minerCost *= 4
+    gameData.minerCost += 100*gameData.minerspurchased 
     document.getElementById("goldTime").innerHTML = format((gameData.miner * gameData.minerpower) + (gameData.drillBot * gameData.drillBotPower), "scientific") + " Gold Mined Per Second"
     document.getElementById("goldTimeUpgrade").innerHTML = "Buy another Miner (currently Level " + gameData.minerspurchased + ") Cost: " + format(gameData.minerCost, "scientific") + " Gold"
     document.getElementById("miners").innerHTML = gameData.miner + " Miners"
@@ -85,7 +90,7 @@ function buyHirer() {
     gameData.gold -= gameData.hireCost
     gameData.hirer += 1
     gameData.hirerpurchased += 1
-    gameData.hireCost *= 8
+    gameData.hireCost += 500*gameData.hirerpurchased
     document.getElementById("minersH").innerHTML = (gameData.hirer * gameData.hirePower) + " Miners Hired Per Second"
     document.getElementById("buyHirer").innerHTML = "Buy another Hirer (Currently Level " + format(gameData.hirerpurchased, "scientific") + ") Cost: " + format(gameData.hireCost, "scientific") + " Gold"
   }
@@ -111,6 +116,7 @@ function reset() {
   document.getElementById("perClickUpgrade").innerHTML = "Upgrade Pickaxe (Currently Level " + gameData.goldPerClickPurchased + ") Cost: " + gameData.goldPerClickCost + " Gold"
   
   document.getElementById("goldTime").innerHTML = (gameData.miner * gameData.minerpower) * gameData.A1 + (gameData.drillBot * gameData.drillBotPower) + " Gold Mined Per Second"
+  
 
   document.getElementById("minersH").innerHTML = (gameData.hirer * gameData.hirePower) + " Miners hired Per Second"
   
@@ -158,9 +164,6 @@ let mainGameLoop = window.setInterval(function() {
     A1 = true
     document.getElementById("AT").style.visibility = "visible";
     document.getElementById("AT").style.textAlign = "center";
-
-  } else {
-    document.getElementById("AT").style.visibility = "hidden";
   }
 
   if (A1 == true) {
@@ -169,11 +172,22 @@ let mainGameLoop = window.setInterval(function() {
     document.getElementById("AT").style.visibility = "visible";
     document.getElementById("AT").style.textAlign = "center";
   }
+
+if(gameData.hirerpurchased>=20){
+  A2 = true
+}
+
+if (A2 == true){
+  gameData.A2 = 2
+  document.getElementById("A2").style.color = "Green"
+}
+
+
   if (gameData.gold >= 500) {
     document.getElementById("buyHirer").style.visibility = "visible";
     document.getElementById("buyHirer").style.textAlign = "center";
   }
-  if (gameData.gold >= 100000) {
+  if (gameData.gold >= prestigeData.prestigelimit) {
     Plimit = true
     document.getElementById("Pres").style.backgroundColor = "#d4c4f3"
   }else{
@@ -218,9 +232,9 @@ function upgrade3() {
   if (gameData.gold >= gameData.upgrade3Cost) {
     gameData.gold -= gameData.upgrade3Cost
     gameData.upgrade3Amount += 1
-    gameData.goldPerClick *= 10
+    gameData.goldPerClick *= 100
     document.getElementById("upgrade3").style.visibility = "hidden"
-    document.getElementById("upgrade3").innerHTML = "Buy An Exoskeleton Suit for you (Currently Level " + gameData.upgrade3Amount + ") Cost: " + format(gameData.upgrade3Cost, "scientific") + " Gold"
+    document.getElementById("upgrade3").innerHTML = "Buy An Exoskeleton - multiplies click power by 100 (Currently Level " + gameData.upgrade3Amount + ") Cost: " + format(gameData.upgrade3Cost, "scientific") + " Gold"
   }
 }
 
@@ -281,7 +295,7 @@ function prestige() {
       goldPerClickCost: 10,
       goldPerClickPurchased: 1,
       miner: 0.0,
-      minerCost: 50,
+      minerCost: 100,
       upgrade1Cost: 100,
       upgrade1Amount: 0,
       minerpower: 1,
@@ -291,7 +305,7 @@ function prestige() {
       upgrade3Cost: 15000,
       upgrade3Amount: 0,
       hirer: 0,
-      hireCost: 500,
+      hireCost: 1000,
       hirerpurchased: 0,
       hirePower: 1,
       A1: 1,
@@ -303,8 +317,10 @@ function prestige() {
   document.getElementById("upgrade3").style.visibility = "visible"
   Plimit = false
   prestigeData.prestige += 1
+  document.getElementById("prestigePoints").innerHTML = prestigeData.prestige + " Prestige Points"
   reset()
-  //make it so buttons go back to defeault maybve using words rather than variables.
+
+  
 }
 
 function prestigeU1() {
@@ -328,3 +344,12 @@ function prestigeU2() {
   }
 }
 
+function prestigeU3() {
+  if (prestigeData.prestige >= prestigeData.prestigeU3Cost) {
+    prestigeData.prestige -= prestigeData.prestigeU3Cost
+    prestigeData.prestigeU3Amount += 1
+    document.getElementById("prestigeU3").style.visibility = "hidden"
+    // one time purchase
+    
+  }
+}
