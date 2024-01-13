@@ -111,9 +111,9 @@ function reset() {
   document.getElementById("perClickUpgrade").innerHTML = "Upgrade Pickaxe (Currently Level " + gameData.goldPerClickPurchased + ") Cost: " + gameData.goldPerClickCost + " Gold"
   
   document.getElementById("goldTime").innerHTML = (gameData.miner * gameData.minerpower) * gameData.A1 + (gameData.drillBot * gameData.drillBotPower) + " Gold Mined Per Second"
-  
 
   document.getElementById("minersH").innerHTML = (gameData.hirer * gameData.hirePower) + " Miners hired Per Second"
+  
   document.getElementById("miners").innerHTML = gameData.miner + " Miners"
   
   document.getElementById("goldTimeUpgrade").innerHTML = "Buy another Miner (currently Level " + gameData.minerspurchased + ") Cost: " + gameData.minerCost + " Gold"
@@ -128,7 +128,9 @@ function reset() {
 
   document.getElementById("minersH").innerHTML = gameData.hirer + " Miners Hired Per Second"
   
-  document.getElementById("buyHirer").innerHTML = "Buy another Hirer (Currently Level " + format(gameData.hirerpurchased, "scientific") + ") Cost: " + gameData.hireCost + " Gold"
+  document.getElementById("buyHirer").innerHTML = "Buy another Hirer (Currently Level " + gameData.hirerpurchased + ") Cost: " + gameData.hireCost + " Gold"
+
+  document.getElementById("buyDrillBot").innerHTML = "Buy Another DrillBot (Currently Level " + gameData.drillBotpurchased + ") Cost: " + format(gameData.drillBotCost, "scientific") + " Gold"
 }
 
 function buyDrillBot() {
