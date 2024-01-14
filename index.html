@@ -14,14 +14,15 @@
       <div id="info">
         <div id="info1">
           <p id="prestigePoints">0 Prestige Points</p>
+          <p id="tickspeedT">Tickspeed: 1000</p>
         </div>
         <div id="info2">
-        <p id="goldMined">0 Gold Mined</p>
-        <p id="goldTime">0 Gold Mined Per Second</p>
-        <p id="miners">0.0 Miners</p>
-        <p id="minersH">0 Miners Hired Per Second</p>
-        <p id="drillBot">0 DrillBots</p>
-        <p id="drillBotM">0 DrillBots Built Per Second</p>
+          <p id="goldMined">0 Gold Mined</p>
+          <p id="goldTime">0 Gold Mined Per Second</p>
+          <p id="miners">0.0 Miners</p>
+          <p id="minersH">0 Miners Hired Per Second</p>
+          <p id="drillBot">0 DrillBots</p>
+          <p id="drillBotM">0 DrillBots Built Per Second</p>
         </div>
       </div>
       <div id="tabs">
@@ -45,11 +46,14 @@
         <button onclick="buyMiner()" id="goldTimeUpgrade">Buy a Miner (Currently 0) Cost: 100 Gold</button>
       </div>
       <div class="button">
-        <button onclick="buyHirer()" id="buyHirer">Buy Hiring staff to hire miners for you (Currently 0)
-          Price:1000</button>
+        <button onclick="buyHirer()" id="buyHirer">Buy Hiring staff to hire miners for you (Currently 0) Cost: 1000 Gold</button>
       </div>
       <div class="button">
-        <button onclick="buyDrillBot()" id="buyDrillBot">Buy a DrillBot (Currently 0) Cost:2000
+        <button onclick="buyDrillBot()" id="buyDrillBot">Buy a DrillBot (Currently 0) Cost: 2000 Gold
+        </button>
+      </div>
+      <div class="button">
+        <button onclick="buyMachine()" id="buyMachine">Buy a Machine (Currently 0) Cost: 10000 Gold
         </button>
       </div>
     </div>
@@ -67,33 +71,45 @@
     <div id="Achievements">
       <p>Achievements</p>
       <div id="AchieveShow">
-      <div class="Achieve">
-        <p id="A1">Reach 100000 Gold</p>
-        <p id="A1E">Increases Miner power by 50%</p>
+        <div class="Achieve">
+          <p id="A1">Reach 100000 Gold</p>
+          <p id="A1E">Increases Miner power by 50%</p>
         </div>
         <div class="Achieve">
-        <p id="A2">Reach 20 Hirers</p>
-        <p id="A2E">Increases Hirer power by 100%</p>
-      </div>
+          <p id="A2">Reach 20 Hirers</p>
+          <p id="A2E">Increases Hirer power by 100%</p>
+        </div>
       </div>
     </div>
     <div id="Prestige">
       <div id="pText">
-        <p>You have grown too big and you must restart your company, but you will keep some experience of your time in this past buisness.</p>
+        <p>You have grown too big and you must restart your company, but you will keep some experience of your time in
+          this past buisness.</p>
       </div>
-      <div class="prestigeC">
-        <button onclick="prestige()" id="prestige">Begin your new buinsess venture.</button>
+      <div id="prestigeButtons">
+        <div id="prestigeButtons1">
+          <div class="prestigeC">
+            <button onclick="prestige()" id="prestige">Begin your new buinsess venture. Gain 1 Prestige Point</button>
+          </div>
+          <div class="prestigeC">
+            <button onclick="prestigeU1()" id="prestigeU1">Invent in a new way to mine gold a DrillBot: 1 Prestige
+              Point</button>
+          </div>
+          <div class="prestigeC">
+            <button onclick="prestigeU2()" id="prestigeU2">Decrease the tickspeed interval time by 10%: 1 Prestige Point
+              (0/5)</button>
+          </div>
+          <div class="prestigeC">
+            <button onclick="prestigeU3()" id="prestigeU3">Unlock a more effecient way to produce DrillBots with
+              machinery.</button>
+          </div>
+        </div>
+        <div id="prestigeButtons2">
+          <div class="prestigeC">
+            <button onclick="prestigeU4()" id="prestigeU4">Hire better accountants-gain 10 Prestige Points upon prestige at 1000000000 Gold: 10 Prestige Points.</button>
+          </div>
+        </div>
       </div>
-      <div class="prestigeC">
-        <button onclick="prestigeU1()" id="prestigeU1">Invent in a new way to mine gold a DrillBot: 1 Prestige
-          Point</button>
-      </div>
-      <div class="prestigeC">
-<button onclick="prestigeU2()" id="prestigeU2">Decrease the tickspeed interval time</button>
-      </div>
-      <div class="prestigeC">
-        <button onclick="prestigeU3()" id="prestigeU3">Unlock a more effecient way to produce DrillBots with machinery.</button>
-              </div>
     </div>
     <script src="script.js"></script>
 
