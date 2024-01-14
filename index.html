@@ -19,6 +19,7 @@
         <div id="info2">
           <p id="goldMined">0 Gold Mined</p>
           <p id="goldTime">0 Gold Mined Per Second</p>
+          <p id="goldPerClick">1 Gold Per Click</p>
           <p id="miners">0.0 Miners</p>
           <p id="minersH">0 Miners Hired Per Second</p>
           <p id="drillBot">0 DrillBots</p>
@@ -30,11 +31,12 @@
         <button onclick="tab('Upgrades')" class="tab">Go to Shop</button>
         <button onclick="tab('Achievements')" class="tab" id="AT">Achievements</button>
         <button onclick="tab('Prestige')" class="tab" id="Pres">Prestige</button>
+        <button onclick="tab('settings')" class="tab" id="settingsButton">Settings</button>
 
       </div>
     </div>
     <div id='buttons'>
-      <p>Mine Gold</p>
+      <p id="goldText">Mine Gold</p>
       <div class="button">
         <button onclick="mineGold()" id="mineGold">Mine Gold</button>
       </div>
@@ -46,7 +48,8 @@
         <button onclick="buyMiner()" id="goldTimeUpgrade">Buy a Miner (Currently 0) Cost: 100 Gold</button>
       </div>
       <div class="button">
-        <button onclick="buyHirer()" id="buyHirer">Buy Hiring staff to hire miners for you (Currently 0) Cost: 1000 Gold</button>
+        <button onclick="buyHirer()" id="buyHirer">Buy Hiring staff to hire miners for you (Currently 0) Cost: 1000
+          Gold</button>
       </div>
       <div class="button">
         <button onclick="buyDrillBot()" id="buyDrillBot">Buy a DrillBot (Currently 0) Cost: 2000 Gold
@@ -101,14 +104,21 @@
           </div>
           <div class="prestigeC">
             <button onclick="prestigeU3()" id="prestigeU3">Unlock a more effecient way to produce DrillBots with
-              machinery.</button>
+              machinery: 2 Prestige Points.</button>
           </div>
         </div>
         <div id="prestigeButtons2">
           <div class="prestigeC">
-            <button onclick="prestigeU4()" id="prestigeU4">Hire better accountants-gain 10 Prestige Points upon prestige at 1000000000 Gold: 10 Prestige Points.</button>
+            <button onclick="prestigeU4()" id="prestigeU4">Hire better accountants-gain 10 Prestige Points upon prestige
+              at 1000000000 Gold: 10 Prestige Points.</button>
           </div>
         </div>
+      </div>
+    </div>
+    <div id="settings">
+      <p>Settings</p>
+      <div id="settingsOptions">
+        <button onclick="deleteSaveData()" id="deleteSave">Delete your Save Data</button>
       </div>
     </div>
     <script src="script.js"></script>
