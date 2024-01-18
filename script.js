@@ -285,19 +285,19 @@ function tab(tab) {
 // go to a tab for the first time, so not all show
 tab("buttons")
 
-// var saveGameLoop = window.setInterval(function () {
-//   localStorage.setItem("goldMinerSave", JSON.stringify(gameData))
-// }, 15000)
+var saveGameLoop = window.setInterval(function () {
+  localStorage.setItem("goldMinerSave", JSON.stringify(gameData))
+}, 15000)
 
 
-// let savegame = JSON.parse(localStorage.getItem("goldMinerSave"))
-// if (savegame !== null) {
-//   gameData = savegame
-// }
+let savegame = JSON.parse(localStorage.getItem("goldMinerSave"))
+if (savegame !== null) {
+  gameData = savegame
+}
 
-// function deleteSaveData() {
-//   localStorage.removeItem("goldMinerSave");
-// }
+function deleteSaveData() {
+  localStorage.removeItem("goldMinerSave");
+}
 
 
 function prestige() {
