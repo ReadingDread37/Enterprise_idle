@@ -1,5 +1,6 @@
 
 let shownHire = false
+let shownPrestige = false
 let Plimit = false
 let A1 = false
 let A2 = false
@@ -7,6 +8,7 @@ let interval = 1000
 let gameData = {
   gold: 0,
   goldPerClick: 1,
+  upgrade3:1,
   goldPerClickCost: 10,
   goldPerClickPurchased: 1,
   miner: 0.0,
@@ -43,7 +45,7 @@ let prestigeData = {
   prestigeU1Amount: 0,
   prestigeU2Cost: 1,
   prestigeU2Amount: 0,
-  prestigeU3Cost: 0,
+  prestigeU3Cost: 2,
   prestigeU3Amount: 0,
   prestigeU4Cost: 10,
   prestigeU4Amount: 0,
@@ -59,14 +61,16 @@ function format(number, type) {
 
 
 function mineGold() {
-  gameData.gold += gameData.goldPerClick
+  gameData.gold += gameData.goldPerClick * gameData.upgrade3
   document.getElementById("goldMined").innerHTML = format(gameData.gold, "scientific") + " Gold Mined"
 }
 
 
 function mineGoldTime() {
-  gameData.gold += ((gameData.minerpower * gameData.miner) * gameData.A1) + (gameData.drillBot * gameData.drillBotPower)
-  document.getElementById("goldTime").innerHTML = format(((gameData.miner * gameData.minerpower) * gameData.A1) + (gameData.drillBot * gameData.drillBotPower), "scientific") + " Gold Mined Per Second"
+let mineg = ((gameData.minerpower * gameData.miner) * gameData.A1) 
+let drillg = (gameData.drillBot * gameData.drillBotPower)
+  gameData.gold += mineg + drillg
+  document.getElementById("goldTime").innerHTML = format(mineg + drillg, "scientific") + " Gold Mined Per Second"
   document.getElementById("goldMined").innerHTML = format(gameData.gold, "scientific") + " Gold Mined"
 }
 
@@ -79,8 +83,8 @@ function hireTime() {
 
 function machineTime(){
   gameData.drillBot += gameData.machine * gameData.machinePower
-  document.getElementById("drillBotM").innerHTML = format((gameData.hirer * gameData.hirePower), "scientific") + " DrillBots built Per Second"
-  document.getElementById("drillBot").innerHTML = format(gameData.miner, "scientific") + " drillBots"
+  document.getElementById("drillBotM").innerHTML = format((gameData.machine * gameData.machinePower), "scientific") + " DrillBots built Per Second"
+  document.getElementById("drillBot").innerHTML = format(gameData.drillBot, "scientific") + " drillBots"
 }
 
 
@@ -109,12 +113,23 @@ function buyHirer() {
   }
 }
 
+function buyDrillBot() {
+  if (gameData.gold >= gameData.drillBotCost) {
+    gameData.gold -= gameData.drillBotCost
+    gameData.drillBot += 1
+    gameData.drillBotpurchased += 1
+    gameData.drillBotCost += 1500 * gameData.drillBotpurchased
+    document.getElementById("buyDrillBot").innerHTML = "Buy Another DrillBot (Currently Level " + format(gameData.drillBotpurchased, "scientific") + ") Cost: " + format(gameData.drillBotCost, "scientific") + " Gold"
+    document.getElementById("drillBot").innerHTML = gameData.drillBot + " DrillBots"
+  }
+}
+
 function buyMachine() {
   if (gameData.gold >= gameData.machineCost) {
     gameData.gold -= gameData.machineCost
     gameData.machine += 1
     gameData.machinepurchased += 1
-    gameData.machineCost += (5000 * gameData.hirerpurchased)
+    gameData.machineCost += (5000 * gameData.machinepurchased)
     document.getElementById("drillBotM").innerHTML = (gameData.machine * gameData.machinePower) + " DrillBots built Per Second"
     document.getElementById("buyMachine").innerHTML = "Buy another Machine (Currently Level " + gameData.machinepurchased + ") Cost: " + format(gameData.machineCost, "scientific") + " Gold"
   }
@@ -149,16 +164,7 @@ function reset() {
   document.getElementById("goldPerClick").innerHTML = "1 Gold Per Click"
 }
 
-function buyDrillBot() {
-  if (gameData.gold >= gameData.drillBotCost) {
-    gameData.gold -= gameData.drillBotCost
-    gameData.drillBot += 1
-    gameData.drillBotpurchased += 1
-    gameData.drillBotCost *= 6
-    document.getElementById("buyDrillBot").innerHTML = "Buy Another DrillBot (Currently Level " + format(gameData.drillBotpurchased, "scientific") + ") Cost: " + format(gameData.drillBotCost, "scientific") + " Gold"
-    document.getElementById("drillBot").innerHTML = gameData.drillBot + " DrillBots"
-  }
-}
+
 
 
 // let resetLoop = window.setInterval(function() {
@@ -166,11 +172,17 @@ function buyDrillBot() {
 // }, 1)
 
 
+let slowGameLoop = window.setInterval(function(){
+  machineTime()
+
+},interval*5)
+
+
+
 let mainGameLoop = window.setInterval(function () {
 
   mineGoldTime()
   hireTime()
-  machineTime()
   if (gameData.gold >= 100000) {
     A1 = true
     document.getElementById("AT").style.visibility = "visible";
@@ -193,6 +205,16 @@ let mainGameLoop = window.setInterval(function () {
     document.getElementById("A2").style.color = "Green"
   }
 
+  if(gameData.gold>= 100000){
+shownPrestige = true
+  }
+
+if(shownPrestige == true){
+  document.getElementById("Pres").style.visibility = "visible";
+  document.getElementById("Pres").style.textAlign = "center";
+}
+
+
   if (gameData.gold >= 500 || shownHire == true) {
     document.getElementById("buyHirer").style.visibility = "visible";
     document.getElementById("buyHirer").style.textAlign = "center";
@@ -204,9 +226,6 @@ let mainGameLoop = window.setInterval(function () {
   } else {
     document.getElementById("Pres").style.backgroundColor = "#ecce22"
   }
-  // if(Plimit == true){
-  //   document.getElementById("Prestige").style.display = "grid"
-  // }
   if (prestigeData.prestigeU1Amount >= 1) {
     document.getElementById("buyDrillBot").style.visibility = "visible";
     document.getElementById("buyDrillBot").style.textAlign = "center";
@@ -236,7 +255,7 @@ function upgrade2() {
     gameData.gold -= gameData.upgrade2Cost
     gameData.upgrade2Amount += 1
     gameData.hirePower *= 2
-    gameData.upgrade2Cost *= 17
+    gameData.upgrade2Cost *= 15
     document.getElementById("upgrade2").innerHTML = "Better Paper Work Filing- Doubles Power of Hirers (Currently Level " + gameData.upgrade2Amount + ") Cost: " + format(gameData.upgrade2Cost, "scientific") + " Gold"
   }
 }
@@ -247,7 +266,8 @@ function upgrade3() {
   if (gameData.gold >= gameData.upgrade3Cost) {
     gameData.gold -= gameData.upgrade3Cost
     gameData.upgrade3Amount += 1
-    gameData.goldPerClick *= 100 //*100 is too powerful
+    gameData.upgrade3 = 50
+    document.getElementById("goldPerClick").innerHTML = gameData.goldPerClick + " Gold Per Click"
     document.getElementById("upgrade3").style.visibility = "hidden"
     document.getElementById("upgrade3").innerHTML = "Buy An Exoskeleton - multiplies click power by 100 (Currently Level " + gameData.upgrade3Amount + ") Cost: " + format(gameData.upgrade3Cost, "scientific") + " Gold"
   }
@@ -281,13 +301,13 @@ tab("buttons")
 
 
 function prestige() {
-  if (prestigeData.prestigelimit == 100000 && gameData.gold >= prestigeData.prestigelimit) {
+  if (gameData.gold >= 100000 && gameData.gold < 1000000000) {
 
-    gameData.gold = 0,
+      gameData.gold = 0,
       gameData.goldPerClick = 1,
       gameData.goldPerClickCost = 10,
       gameData.goldPerClickPurchased = 1,
-      gameData.miner = 0.0,
+      gameData.miner = 0,
       gameData.minerCost = 100,
       gameData.upgrade1Cost = 100,
       gameData.upgrade1Amount = 0,
@@ -309,41 +329,43 @@ function prestige() {
       gameData.machineCost = 10000,
       gameData.machinepurchased = 0,
       gameData.machinePower = 1,
+      gameData.upgrade3 = 1,
 
 
       document.getElementById("upgrade3").style.visibility = "visible"
     prestigeData.prestige += 1
     document.getElementById("prestigePoints").innerHTML = prestigeData.prestige + " Prestige Points"
     reset()
-  } else if (prestigeData.prestigelimit == 1000000000 && gameData.gold >= prestigeData.prestigelimit) {
-    gameData = {
-      gold: 0,
-      goldPerClick: 1,
-      goldPerClickCost: 10,
-      goldPerClickPurchased: 1,
-      miner: 0.0,
-      minerCost: 100,
-      upgrade1Cost: 100,
-      upgrade1Amount: 0,
-      minerpower: 1,
-      minerspurchased: 0,
-      upgrade2Cost: 1000,
-      upgrade2Amount: 0,
-      upgrade3Cost: 15000,
-      upgrade3Amount: 0,
-      hirer: 0,
-      hireCost: 1000,
-      hirerpurchased: 0,
-      hirePower: 1,
-      drillBot: 0,
-      drillBotCost: 2000,
-      drillBotpurchased: 0,
-      drillBotPower: 20,
-      machine: 0,
-      machineCost: 10000,
-      machinepurchased: 0,
-      machinePower: 1,
-    }
+  } else if (gameData.gold >= 1000000000) {
+    gameData.gold = 0,
+    gameData.goldPerClick = 1,
+    gameData.goldPerClickCost = 10,
+    gameData.goldPerClickPurchased = 1,
+    gameData.miner = 0,
+    gameData.minerCost = 100,
+    gameData.upgrade1Cost = 100,
+    gameData.upgrade1Amount = 0,
+    gameData.minerpower = 1,
+    gameData.minerspurchased = 0,
+    gameData.upgrade2Cost = 1000,
+    gameData.upgrade2Amount = 0,
+    gameData.upgrade3Cost = 15000,
+    gameData.upgrade3Amount = 0,
+    gameData.hirer = 0,
+    gameData.hireCost = 1000,
+    gameData.hirerpurchased = 0,
+    gameData.hirePower = 1,
+    gameData.drillBot = 0,
+    gameData.drillBotCost = 2000,
+    gameData.drillBotpurchased = 0,
+    gameData.drillBotPower = 20,
+    gameData.machine = 0,
+    gameData.machineCost = 10000,
+    gameData.machinepurchased = 0,
+    gameData.machinePower = 1,
+    gameData.upgrade3 = 1,
+
+
     document.getElementById("upgrade3").style.visibility = "visible"
     prestigeData.prestige += 10
     document.getElementById("prestigePoints").innerHTML = prestigeData.prestige + " Prestige Points"
@@ -397,22 +419,23 @@ function prestigeU1() {
     prestigeData.prestige -= prestigeData.prestigeU1Cost
     prestigeData.prestigeU1Amount += 1
     document.getElementById("prestigeU1").style.visibility = "hidden"
+    document.getElementById("prestigePoints").innerHTML = prestigeData.prestige + " Prestige Points"
     // one time purchase
   }
-
 }
 
 
 function prestigeU2() {
-  if (prestigeData.prestigeU2Amount >= 5) {
+  if (prestigeData.prestigeU2Amount >= 10) {
 
   } else if (prestigeData.prestige >= prestigeData.prestigeU2Cost) {
     prestigeData.prestige -= prestigeData.prestigeU2Cost
     prestigeData.prestigeU2Amount += 1
     prestigeData.prestigeU2Cost *= 2
     interval -= 10
-    document.getElementById("prestigeU2").innerHTML = "Decreases the tickspeed interval by 10%: " + prestigeData.prestigeU2Cost + " Prestige Points (" + prestigeData.prestigeU2Amount + "/5)"
+    document.getElementById("prestigeU2").innerHTML = "Decreases the tickspeed interval by 10%: " + prestigeData.prestigeU2Cost + " Prestige Points (" + prestigeData.prestigeU2Amount + "/10)"
     document.getElementById("tickspeedT").innerHTML = "Tickspeed: " + interval
+    document.getElementById("prestigePoints").innerHTML = prestigeData.prestige + " Prestige Points"
   }
 }
 
@@ -421,6 +444,7 @@ function prestigeU3() {
     prestigeData.prestige -= prestigeData.prestigeU3Cost
     prestigeData.prestigeU3Amount += 1
     document.getElementById("prestigeU3").style.visibility = "hidden"
+    document.getElementById("prestigePoints").innerHTML = prestigeData.prestige + " Prestige Points"
     // one time purchase
 
   }
@@ -431,8 +455,10 @@ function prestigeU3() {
 function prestigeU4() {
   if (prestigeData.prestige >= prestigeData.prestigeU4Cost) {
     prestigeData.prestige -= prestigeData.prestigeU4Cost
-    prestigeData.prestigeU4Amount *= 100
+    prestigeData.prestigeU4Amount += 1
+    prestigeData.prestigeU4Cost *=100
     prestigeData.prestigelimit = 1000000000
+    document.getElementById("prestigePoints").innerHTML = prestigeData.prestige + " Prestige Points"
   }
 }
 
