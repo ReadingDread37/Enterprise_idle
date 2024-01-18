@@ -258,7 +258,10 @@ body {
 
 
 #Pres {
-  visibility: visible;
+  text-align: center;
+  visibility: hidden;
+  align-items: center;
+  justify-content: center;
 }
 
 
